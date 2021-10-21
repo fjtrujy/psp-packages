@@ -1,6 +1,6 @@
 # Maintainer: Wouter Wijsman <wwijsman@live.nl>
 pkgname=jpeg
-pkgver=8c
+pkgver=2.1.1
 pkgrel=1
 pkgdesc="a free library for JPEG image compression"
 arch=('mips')
@@ -9,19 +9,24 @@ license=('custom')
 depends=()
 makedepends=()
 optdepends=()
-source=("git+https://github.com/pspdev/psp-ports.git#commit=f47bd37edf202284fc039106a5b27d9b7314bd76")
+source=("git+https://github.com/libjpeg-turbo/libjpeg-turbo#commit=0a9b9721782d3a60a5c16c8c9a7abf3d4b1ecd42")
 sha256sums=('SKIP')
 
 build() {
-    cd "psp-ports/$pkgname"
-    make
+    cd libjpeg-turbo
+    mkdir -p build
+    cd build
+    cmake -Wno-dev -DCMAKE_TOOLCHAIN_FILE=$PSPDEV/psp/share/pspdev.cmake -DCMAKE_INSTALL_PREFIX=${pkgdir}/psp -DBUILD_SHARED_LIBS=OFF \
+        -DCMAKE_BUILD_TYPE=Release -DENABLE_SHARED=FALSE -DWITH_SIMD=0 "${XTRA_OPTS[@]}" .. || { exit 1; }
+    make --quiet $MAKEFLAGS || { exit 1; }
 }
 
 package() {
-    cd "psp-ports/$pkgname"
-    make PSPDIR="${pkgdir}/psp" install
+    cd "libjpeg-turbo/build"
+    make --quiet $MAKEFLAGS install
+    cd ..
 
     mkdir -m 755 -p "$pkgdir/psp/share/licenses/$pkgname"
-    install -m 644 README "$pkgdir/psp/share/licenses/$pkgname"
+    install -m 644 README.ijg "$pkgdir/psp/share/licenses/$pkgname"
 }
 
