@@ -18,7 +18,7 @@ build() {
     LDFLAGS="$LDFLAGS -L$(psp-config --pspsdk-path)/lib $(psp-pkgconf --libs libpng zlib)" \
     CFLAGS="$CFLAGS $(psp-pkgconf --cflags libpng zlib)" \
     ./configure --host=psp --prefix=/psp
-    make --quiet $MAKEFLAGS || { exit 1; }
+    make VERBOSE=1 $MAKEFLAGS || { exit 1; }
 }
 
 package() {
