@@ -15,10 +15,10 @@ sha256sums=('SKIP')
 build() {
     cd "$pkgname"
     ./autogen.sh
-    LDFLAGS="$LDFLAGS -L$(psp-config --pspsdk-path)/lib $(psp-pkgconf --libs libpng zlib)" \
-    CFLAGS="$CFLAGS $(psp-pkgconf --cflags libpng zlib)" \
+    LDFLAGS="-L$(psp-config --pspsdk-path)/lib $(psp-pkgconf --libs libpng zlib)" \
+    CFLAGS="-G0 -O2 $(psp-pkgconf --cflags libpng zlib)" \
     ./configure --host=psp --prefix=/psp
-    make VERBOSE=1 $MAKEFLAGS || { exit 1; }
+    make --quiet $MAKEFLAGS || { exit 1; }
 }
 
 package() {
