@@ -6,8 +6,7 @@ ARG PACKAGES_REPO
 
 COPY . /src
 
-RUN apk add build-base bash wget curl git python3 py3-pip cmake m4 pkgconfig libarchive-tools libarchive-dev openssl-dev gpgme-dev \
-    curl-dev asciidoc asciidoctor autoconf automake libtool
+RUN apk add build-base bash wget curl libarchive-dev gpgme-dev
 RUN cd /src
 
 # https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8
