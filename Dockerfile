@@ -7,16 +7,7 @@ ARG PACKAGES_REPO
 COPY . /src
 
 RUN apk add build-base bash wget curl libarchive-dev gpgme-dev
-RUN cd /src
-
-# https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8
-RUN curl -s https://api.github.com/repos/${PACKAGES_REPO}/releases/latest \
-        | grep "browser_download_url.*pkg.tar.gz" \
-        | cut -d : -f 2,3 \
-        | tr -d \" \
-        | wget -qi -
-
-RUN psp-pacman -U --noconfirm *.pkg.tar.gz
+RUN cd /src && ./install-lates.sh ${PACKAGES_REPO}
 
 # Second stage of Dockerfile
 FROM alpine:latest
