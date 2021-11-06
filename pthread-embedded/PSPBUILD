@@ -10,7 +10,7 @@ license=('GPL2')
 depends=()
 makedepends=()
 optdepends=()
-source=("git+https://github.com/fjtrujy/pthread-embedded#commit=9f54480919e55e91fde408bf10b6d66eb84c052f")
+source=("git+https://github.com/fjtrujy/pthread-embedded#commit=51124b1eeedb9572f3dc25cd263ad2085d3f0574")
 sha256sums=('SKIP')
 
 build() {
